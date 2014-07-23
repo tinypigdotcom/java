@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 
 // concept: class
 class Bicycle {
@@ -60,6 +61,12 @@ class MountainBike extends Bicycle {
 
 public class AllInOne {
     public static void main (String[] args) throws IOException {
+        System.out.println("<-------------------------- start");
+        System.out.println(args.length); System.exit(1); // concept: die
+        for (String s: args) {
+            System.out.println(s);
+        }
+        System.out.println("died"); System.exit(1); // concept: die
 
         Bicycle frank = new Bicycle(5,7,10); // concept: object, class instance
         frank.setGear(3);                    // concept: call method
@@ -77,6 +84,35 @@ public class AllInOne {
         }
         System.out.println(outputString); // concept: console output
         frank.fileIo();
+
+      // Create a hash map
+      HashMap<String, Double> hm = new HashMap<>();
+      // Put elements to the map
+      hm.put("Zara", new Double(3434.34));
+      hm.put("Mahnaz", new Double(123.22));
+      hm.put("Ayan", new Double(1378.00));
+      hm.put("Daisy", new Double(99.22));
+      hm.put("Qadir", new Double(-19.08));
+
+      // Get a set of the entries
+      Set set = hm.entrySet();
+      // Get an iterator
+      Iterator i = set.iterator();
+      // Display elements
+      while(i.hasNext()) {
+         Map.Entry me = (Map.Entry)i.next();
+         System.out.print(me.getKey() + ": ");
+         System.out.println(me.getValue());
+      }
+      System.out.println();
+      // Deposit 1000 into Zara's account
+      double balance = ((Double)hm.get("Zara")).doubleValue();
+      hm.put("Zara", new Double(balance + 1000));
+      System.out.println("Zara's new balance: " +
+      hm.get("Zara"));
+
     }
 }
+
+
 
