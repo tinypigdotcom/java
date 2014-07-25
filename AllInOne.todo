@@ -1,0 +1,20 @@
+    look at other utils for ideas
+  X loop over hash
+  X loop over array
+    loop over hash / array containing objects
+    input modify to output
+    xml read write file
+    network operations
+        connect to http/ftp/whatever
+    use all native data types
+    convert each one to the other
+    printf
+    other kinds of loops
+    SQL
+    graphical windows
+    read spec
+    act as front end for task pipe to pipe from
+    other lang interpreter
+    ability to write from scratch
+    sort numeric, sort alpha
+    programming exercises

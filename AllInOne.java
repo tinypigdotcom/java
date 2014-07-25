@@ -19,6 +19,14 @@ class MyUtil {
         br.close();
         bw.close();
     }
+
+    public void printArgs ( String[] inArgs ) {
+        String spaces = "            ";
+        for (String s: inArgs) { // concept: for loop, array loop
+            System.out.println( spaces + s );
+        }
+    }
+
     public void doSwitch ( int inputNumber ) {
         String outputString;
         String spaces = "        ";
@@ -34,14 +42,12 @@ class MyUtil {
         System.out.println(outputString); // concept: console output
 
     }
-    // Q: What is static? What do the other keywords do?
     public void doHash ( ) {
         String spaces = "    ";
         // Create a hash map
         HashMap<String, Double> hm = new HashMap<>();
         // Put elements to the map
         hm.put("Zara",   new Double( 3434.34 ));
-        hm.put("Mahnaz", new Double(  123.22 ));
         hm.put("Qadir",  new Double(  -19.08 ));
 
         // Get a set of the entries
@@ -71,6 +77,15 @@ class Spacer {
     public String getSpace ( ) { return spaces;    }
 }
 
+class OutputMgr {
+    public OutputMgr ( ) { }
+    public void omPrint  ( String[] omLines ) {
+        for ( String s: omLines ) {
+            System.out.println( s );
+        }
+    }
+}
+
 class Ball {
     public int size;
     public String shape;
@@ -80,7 +95,7 @@ class Ball {
         reportInfo();
     }
     public void reportInfo() {
-        String spaces = "            ";
+        String spaces = "                ";
         System.out.println(
             spaces + "Ball:"
             + " size: " + size
@@ -99,16 +114,22 @@ class BasketBall extends Ball {
         super(startSize, startShape);
         orangeness = startOrangeness;
     }
-    public void setOrangeness( int newValue ) {
-        orangeness = newValue;
-    }
+    public void setOrangeness( int newValue ) { orangeness = newValue; }
 }
 
 public class AllInOne {
+    // Q: What is static? What do the other keywords do?
     public static void main (String[] args) throws IOException {
+        String[] myLines = new String[3];
         System.out.println("--------------- START ---------------");
 
         Spacer mySpacer = new Spacer();
+
+        OutputMgr oMan = new OutputMgr();
+        myLines[0] = "ice";
+        myLines[1] = "ice";
+        myLines[2] = "baby";
+        oMan.omPrint(myLines);
 
         MyUtil utilObject = new MyUtil();
         utilObject.fileIo();
@@ -119,12 +140,9 @@ public class AllInOne {
             i = Integer.parseInt(args[0]); // concept: command line argument
         }
         utilObject.doSwitch(i);
+        utilObject.printArgs(args);
 
-        for (String s: args) { // concept: for loop, array loop
-            System.out.println(s);
-        }
-
-        Ball mrBall = new Ball ( 7, "green" ); // concept: object, class instance
+        BasketBall mrBall = new BasketBall ( 7, "square", 3 ); // concept: object, class instance
         mrBall.setSize(2);                     // concept: call method
 
         System.out.println("---------------  END  ---------------"); System.exit(0); // concept: exit
