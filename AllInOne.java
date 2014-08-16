@@ -116,8 +116,9 @@ class OutputMgr {
     public void omPrintLines ( String[] lines ) {
         String returnString = "";
         for (String s: lines) {
-            System.out.println( s );
+            System.out.println( omSpacer.getSpace() + s );
         }
+        omSpacer.bumpSpace();
     }
 
 }
