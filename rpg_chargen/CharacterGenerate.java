@@ -38,11 +38,16 @@ import rpg.*;
 
 public class CharacterGenerate {
     public static void main (String[] args) {
+        DiceRoller oDiceRoller = new DiceRoller();
         if (args.length == 0) {
-            System.out.println("No args!");
+            oDiceRoller.rollDice("4d6 best 3");
+            oDiceRoller.rollDice("4d6 best 3");
+            oDiceRoller.rollDice("4d6 best 3");
+            oDiceRoller.rollDice("4d6 best 3");
+            oDiceRoller.rollDice("4d6 best 3");
+            oDiceRoller.rollDice("4d6 best 3");
         }
         else {
-            DiceRoller oDiceRoller = new DiceRoller();
             oDiceRoller.rollDice(args[0]);
         }
     }

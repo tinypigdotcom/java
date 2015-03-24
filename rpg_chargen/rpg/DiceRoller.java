@@ -5,12 +5,33 @@ import java.util.regex.*;
 import java.util.Random;
 
 public class DiceRoller {
-    public void rollDice ( String rollstring ) {
-        Pattern bestPatt = Pattern.compile("^\\s*(\\d*)\\s*d\\s*(\\d+)\\s*(?:(best)\\s*(\\d+))?\\s*$");
-        Pattern rollPatt = Pattern.compile("^\\s*(\\d*)\\s*d\\s*(\\d+)\\s*(?:([+-])\\s*(\\d+))?\\s*$");
+    private boolean debug = false;
+    public void setDebug (boolean newValue) {
+        debug = newValue;
+    }
+    public boolean getDebug () {
+        return debug;
+    }
+    public void doPrintLine ( String output ) {
+        System.out.println(output);
+    }
+    public void doPrint ( String output ) {
+        System.out.print(output);
+    }
+    public void debugOut ( String output ) {
+        if ( debug ) {
+            System.out.println(output);
+        }
+    }
+    public ArrayList<Integer> rollDice ( String rollstring ) {
+        String pattStart = "^\\s*(\\d*)\\s*d\\s*(\\d+)\\s*(?:(";
+        String pattEnd   = ")\\s*(\\d+))?\\s*$";
+        Pattern bestPatt = Pattern.compile(pattStart + "best" + pattEnd);
+        Pattern rollPatt = Pattern.compile(pattStart + "[+-]" + pattEnd);
         Matcher b = bestPatt.matcher(rollstring);
         Matcher m = rollPatt.matcher(rollstring);
         Matcher j = b;
+        ArrayList<Integer> diceList = new ArrayList<Integer>();
         if (m.matches()) {
             j=m;
         }
@@ -21,31 +42,28 @@ public class DiceRoller {
             int bonus=0;
             String bonusstring="";
             String modifystring="";
-            if (j.matches()) {
-                String multiplierstring = j.group(1);
-                if ( multiplierstring.equals("") ) {
-                    multiplierstring = "1";
-                }
-                multiplier = Integer.parseInt(multiplierstring);
-                die        = Integer.parseInt(j.group(2));
-                modifystring = j.group(3);
-                bonusstring = j.group(4);
-                if ( bonusstring == null ) {
-                    bonus = 0;
-                }
-                else if ( bonusstring.equals("") ) {
-                    bonus = 0;
-                }
-                else {
-                    bonus = Integer.parseInt(bonusstring);
-                }
+            String multiplierstring = j.group(1);
+            if ( multiplierstring.equals("") ) {
+                multiplierstring = "1";
             }
-            System.out.println("multiplier: " + multiplier + "  die: " + die + "  bonus: " + bonus);
+            multiplier = Integer.parseInt(multiplierstring);
+            die        = Integer.parseInt(j.group(2));
+            modifystring = j.group(3);
+            bonusstring = j.group(4);
+            if ( bonusstring == null ) {
+                bonus = 0;
+            }
+            else if ( bonusstring.equals("") ) {
+                bonus = 0;
+            }
+            else {
+                bonus = Integer.parseInt(bonusstring);
+            }
+            debugOut("multiplier: " + multiplier + "  die: " + die + "  bonus: " + bonus);
             Random randomGenerator = new Random();
-            ArrayList<Integer> diceList = new ArrayList<Integer>();
             for (int idx = 1; idx <= multiplier; ++idx){
                 int randomInt = randomGenerator.nextInt(die)+1;
-                System.out.println("Generated: " + randomInt);
+                doPrint(" " + randomInt);
                 diceList.add(randomInt);
             }
             Collections.sort(diceList,Collections.reverseOrder());
@@ -63,9 +81,9 @@ public class DiceRoller {
             for (Iterator<Integer> it = diceList.iterator(); it.hasNext();) {
                 item = it.next();
                 total += item;
-                System.out.println("Item is: " + item);
+                debugOut("Item is: " + item);
             }
-            System.out.println("total: " + total);
+            debugOut(": " + total);
             if ( modifystring == null ) {
             }
             else if ( modifystring.equals("-") ) {
@@ -74,11 +92,12 @@ public class DiceRoller {
             else if ( modifystring.equals("+") ) {
                 total += bonus;
             }
-            System.out.println("total: " + total);
+            doPrintLine(": " + total);
         }
         else {
-            System.out.println("bad dice");
+            doPrintLine("bad dice");
         }
+        return diceList;
     }
 
 }
